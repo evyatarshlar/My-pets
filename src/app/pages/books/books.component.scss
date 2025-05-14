@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  gap: 2rem;
+  background-color: #a0a0a0;
+}
+.book-view, .wishlist {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  background-color: #fff;
+}
+.sort {
+  margin-bottom: 1rem;
+  background-color: pink;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
