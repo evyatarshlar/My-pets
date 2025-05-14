@@ -1,0 +1,1 @@
+import{Sa as n,qb as o}from"./chunk-OYHVDZPP.js";var m=(()=>{class e{static{this.\u0275fac=function(t){return new(t||e)}}static{this.\u0275cmp=n({type:e,selectors:[["greet"]],decls:1,vars:0,consts:[["src","../../../assets/img/mountains.jpeg","alt",""]],template:function(t,s){t&1&&o(0,"img",0)},encapsulation:2})}}return e})();export{m as GreetComponent};
