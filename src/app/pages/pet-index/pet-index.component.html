@@ -1,0 +1,16 @@
+<section class="pet-index">
+	@defer (when pets_()) {
+		<pet-filter></pet-filter>
+		<a #editLink evStop routerLink="/pets/edit">Add Pet</a>
+		<pet-list (remove)="onRemovePet($event)" [pets]="pets_()"></pet-list>
+		<!-- } @placeholder (minimum 2s) { -->
+	} @placeholder (minimum 2s) {
+		<h1 class="fixed-center loader">Loading...</h1>
+	}
+	@if (removeError_(); as removeError) {
+		<h2>Cannot Remove!!!, {{ removeError }}</h2>
+	}
+
+    
+</section>
+<router-outlet></router-outlet>

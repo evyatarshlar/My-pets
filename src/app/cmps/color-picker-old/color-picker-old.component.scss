@@ -1,0 +1,56 @@
+.color-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    align-items: center;
+    position: absolute;
+    background-color: hsl(0, 0%, 95%);
+    color: black;
+    box-shadow: 1px 2px 4px 1px rgb(0 0 0 / 36%);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 0.5em;
+    top: 120%;
+    right: 50%;
+    translate: 50%;
+    z-index: 10;
+    transform-origin: top;
+    animation: grow 0.2s;
+
+    > h1 {
+        border-bottom: 1px solid rgba(128, 128, 128, 0.398);
+        width: 100%;
+        text-align: center;
+    }
+
+    .colors {
+        display: grid;
+        grid-template-columns: repeat(4, 20px);
+        grid-auto-rows: 20px;
+        gap: 10px;
+        padding: 5px;
+        div {
+            border-radius: 3px;
+            cursor: pointer;
+
+            &.chosen {
+                outline: 3px solid rgb(20, 23, 27);
+            }
+        }
+    }
+}
+
+@keyframes grow {
+    0% {
+        opacity: 0;
+        scale: 1 0;
+    }
+
+    30% {
+        opacity: 0;
+    }
+
+    60% {
+        opacity: 0.5;
+    }
+}

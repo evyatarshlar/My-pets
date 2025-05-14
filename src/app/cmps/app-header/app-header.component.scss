@@ -1,0 +1,50 @@
+header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    background-color: #4caf50;
+    transition: background-color 0.3s, color 0.3s;
+    color: whitesmoke;
+    margin-bottom: 30px;
+    font-size: 1.2em;
+    position: relative;
+    h1.logo {
+        flex-grow: 1;
+    }
+
+    > section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 3em;
+
+        .btn-container {
+            position: relative;
+        }
+        button {
+            border: none;
+            background-color: inherit;
+            padding: 7px;
+            transition: background-color 0.2s;
+            border-radius: 5px;
+            pointer-events: all !important;
+
+            &:hover,
+            &:has(~ color-picker) {
+                background-color: hsl(0 0% 100%/0.2);
+            }
+        }
+        nav {
+            a {
+                &:not(:last-child) {
+                    margin-right: 10px;
+                }
+
+                &.active {
+                    font-weight: 700;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}

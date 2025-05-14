@@ -1,0 +1,10 @@
+<section class="pet-index">
+
+    <pet-details (back)="onSelectPetId('')" *ngIf="selectedPetId; else petList" [petId]="selectedPetId"></pet-details>
+
+    <ng-template #petList>
+        <pet-filter></pet-filter>
+        <pet-list (selectPetId)="onSelectPetId($event)" (remove)="onRemovePet($event)"
+            [pets]="pets$ | async"></pet-list>
+    </ng-template>
+</section>

@@ -1,0 +1,42 @@
+<!-- <section *ngIf="pet$ | async as pet" class="pet-details"> -->
+
+<section class="pet-details">
+	@if (msg_()) {
+		<h1>{{ msg_() }}</h1>
+	} @else {
+		<h1>...</h1>
+	}
+
+	<p><b>Name:</b> {{ pet_().name }}</p>
+	<p><b>Age:</b> {{ pet_().age }}</p>
+	<p><b>birthDate:</b> {{ pet_().birthDate | date: "d/M/yyyy" }}</p>
+
+	<img src="https://robohash.org/{{ pet_()._id }}?set=set4" alt="" />
+
+    <!--* RESOURCE -->
+	@if (ans_.value(); as ans) {
+		<h3>{{ ans }}</h3>
+	} @else if (ans_.error()) {
+		<h3>{{ $any(ans_.error()).message }}</h3>
+	} @else if (ans_.isLoading()) {
+		<h1 class="loader">Loading....</h1>
+	}
+
+    <!--* Reg Signal -->
+    <!-- <h3>{{ ans_() }}</h3> -->
+
+	<section class="actions">
+		<button (click)="onShouldAdoptPet()" class="adopt-btn">Should Adopt?</button>
+		<button (click)="onBack()" class="back-btn">Back</button>
+	</section>
+
+	<button #loadImgBtn>Load Img</button>
+
+	@defer (on interaction(loadImgBtn)) {
+		<greet></greet>
+	} @placeholder {
+		<h1>Theres an image in here</h1>
+	} @loading (minimum 2s) {
+		<h1 class="loader">Loading image..........</h1>
+	}
+</section>

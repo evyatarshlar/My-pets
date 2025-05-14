@@ -1,0 +1,11 @@
+<section class="color-picker">
+	<h1>Pick A Color</h1>
+	<section class="colors">
+		<div
+			*ngFor="let _color of colors"
+			(click)="colorChange.emit(_color)"
+			[class.chosen]="color() === _color"
+			[style.backgroundColor]="_color"
+		></div>
+	</section>
+</section>

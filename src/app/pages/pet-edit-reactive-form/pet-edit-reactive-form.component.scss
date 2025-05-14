@@ -1,0 +1,140 @@
+.pet-edit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 400px;
+    aspect-ratio: 1;
+    top: -10%;
+    position: fixed;
+    inset: 0;
+    top: -10%;
+    margin: auto;
+    box-shadow:
+        0 0 0 100vmax rgba(0, 0, 0, 0.5),
+        -3px 1px 28px #00000043;
+    padding: 50px;
+    background-color: rgb(236, 239, 236);
+    border: solid 3px hsl(230, 100%, 85%);
+    border-radius: 10px;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 70%;
+
+        label {
+            margin-top: 1em;
+        }
+
+    
+        .btns {
+            display: flex;
+            margin-top: 3em;
+            justify-content: center;
+            gap: 20px;
+
+            button {
+                padding: 3px 15px;
+                border-radius: 4px;
+            }
+
+            .btn {
+                background-color: hsl(230, 100%, 65%);
+
+                &:hover {
+                    background-color: hsl(230, 100%, 67%);
+                }
+            }
+        }
+    }
+}
+
+
+.btn {
+    align-items: center;
+    appearance: button;
+    background-color: #0276ff;
+    border-radius: 8px;
+    border-style: none;
+    box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+    font-family: "RM Neue", sans-serif;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+    padding: 10px 21px;
+    text-align: center;
+    text-transform: none;
+    transition:
+        color 0.13s ease-in-out,
+        background 0.13s ease-in-out,
+        opacity 0.13s ease-in-out,
+        transform 0.1s,
+        box-shadow 0.13s ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+
+    &:active {
+        background-color: #006ae8;
+        transform: scale(0.95);
+    }
+
+    &:hover {
+        background-color: #1c84ff;
+    }
+}
+
+.btn-regular {
+    background-color: #ffffff;
+    border: 1px solid #222222;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: #222222;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    margin: 0;
+    outline: none;
+    padding: 13px 23px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    touch-action: manipulation;
+    transition:
+        box-shadow 0.2s,
+        -ms-transform 0.1s,
+        -webkit-transform 0.1s,
+        transform 0.1s;
+    user-select: none;
+    -webkit-user-select: none;
+    width: auto;
+
+    &:focus-visible {
+        box-shadow:
+            #222222 0 0 0 2px,
+            rgba(255, 255, 255, 0.8) 0 0 0 4px;
+        transition: box-shadow 0.2s;
+    }
+
+    &:active {
+        background-color: #f7f7f7;
+        border-color: #000000;
+        transform: scale(0.95);
+    }
+
+    &:disabled {
+        border-color: #dddddd;
+        color: #dddddd;
+        cursor: not-allowed;
+        opacity: 1;
+    }
+}

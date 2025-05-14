@@ -1,0 +1,72 @@
+<!-- NEW WAY -->
+<header
+	[style.color]="headerColorSignal() | textColor"
+	[style.backgroundColor]="headerColorSignal()"
+	class="container"
+>
+	<h1 class="logo">Pets</h1>
+	<section>
+		<section class="btn-container">
+			<button
+				[style.color]="headerColorSignal() | textColor"
+				(click)="isShowColorPicker = !isShowColorPicker"
+				class="btn"
+			>
+				Change Color
+			</button>
+			@if (isShowColorPicker) {
+				<color-picker
+					(clickOutside)="isShowColorPicker = false"
+					[(color)]="headerColorSignal"
+				/>
+			}
+		</section>
+		<nav>
+			<a
+				routerLink="/home"
+				routerLinkActive="active"
+				[routerLinkActiveOptions]="{ exact: true }"
+			>
+				Home
+			</a>
+			<a routerLink="/pets" routerLinkActive="active">Pets</a>
+			<a routerLink="/about" routerLinkActive="active">About</a>
+		</nav>
+	</section>
+</header>
+
+<!-- OLD WAY -->
+<!-- <header
+	[style.color]="headerColor | textColor"
+	[style.backgroundColor]="headerColor"
+	class="container"
+>
+	<h1 class="logo">Pets</h1>
+	<section>
+		<section class="btn-container">
+			<button
+				[style.color]="headerColor | textColor"
+				(click)="isShowColorPicker = !isShowColorPicker"
+				class="btn"
+			>
+				Change Color
+			</button>
+			<color-picker-old
+				*ngIf="isShowColorPicker"
+				(clickOutside)="isShowColorPicker = false"
+				[(color)]="headerColor"
+			/>
+		</section>
+		<nav>
+			<a
+				routerLink="/home"
+				routerLinkActive="active"
+				[routerLinkActiveOptions]="{ exact: true }"
+			>
+				Home
+			</a>
+			<a routerLink="/pets" routerLinkActive="active">Pets</a>
+			<a routerLink="/about" routerLinkActive="active">About</a>
+		</nav>
+	</section>
+</header> -->

@@ -1,0 +1,13 @@
+<section class="pet-preview">
+	<section class="info">
+		<a [routerLink]="['/pets', pet()._id]" class="data">
+			<p>Name: {{ pet().name }}</p>
+			<p>Age: {{ pet().age }}</p>
+		</a>
+		<section class="actions">
+			<button (click)="remove.emit(pet()._id)" class="remove-btn">X</button>
+			<a [routerLink]="['/pets', 'edit', pet()._id]">Edit</a>
+		</section>
+	</section>
+	<img src="https://robohash.org/{{ pet()._id }}?set=set4" alt="" />
+</section>

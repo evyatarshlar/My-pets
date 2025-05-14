@@ -1,0 +1,6 @@
+<!-- @let _filterBy = filterBy_() | structuredClone; -->
+<form [style.margin-bottom.px]="20">
+    <input #input [(ngModel)]="filterBy_().term" (ngModelChange)="onSetFilterBy()" type="text" name="term"
+        placeholder="Search">
+
+</form>

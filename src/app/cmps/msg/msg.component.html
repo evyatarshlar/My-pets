@@ -1,0 +1,6 @@
+@if (msg_(); as msg) {
+	<section class="msg {{ msg.type }}">
+		<h4>{{ msg.txt }}</h4>
+		<button class="close-btn" (click)="onCloseMsg()">X</button>
+	</section>
+}

@@ -1,0 +1,41 @@
+<section (clickOutside)="onBack()" class="pet-edit">
+	<h2>{{ "Add" }} Pet</h2>
+	<form [formGroup]="form" (ngSubmit)="onSavePet()">
+		<label for="name">Name</label>
+		<section class="name-field" *ngIf="form.controls['name'] as nameInput">
+			<input
+				autocomplete="off"
+				#elNameInput
+				type="text"
+				formControlName="name"
+				id="name"
+			/>
+			<span
+				class="fetch-error"
+				*ngIf="nameInput.pending && nameInput.dirty && nameInput.touched"
+			>
+				<loader-svg />
+			</span>
+		</section>
+
+		<ng-container *ngIf="form.controls['name'] as nameInput">
+			<p class="errors" *ngIf="nameInput.touched && nameInput.invalid">
+				<span *ngIf="nameInput.errors?.['required']">name is required!</span>
+				<span *ngIf="nameInput.errors?.['startWithNumber']"
+					>Cannot start with a number!</span
+				>
+				<span *ngIf="nameInput.errors?.['nameTaken']"
+					>Name is already taken!</span
+				>
+			</p>
+		</ng-container>
+
+		<label for="age">Age</label>
+		<input type="number" formControlName="age" id="age" />
+
+		<label for="birthDate">Birth Date</label>
+		<input type="date" formControlName="birthDate" id="birthDate" />
+
+		<button>Save</button>
+	</form>
+</section>

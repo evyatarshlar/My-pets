@@ -1,0 +1,12 @@
+.pet-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.about :host {
+    display: block;
+    border: 2px solid blue;
+    margin-block: 30px;
+
+} 
