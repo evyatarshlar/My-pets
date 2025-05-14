@@ -1,0 +1,18 @@
+.container {
+    padding-inline: 10vw;
+}
+
+// GRIDS
+.simple-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-gap: 10px;
+}
+
+.fixed-center {
+    position: fixed;
+    z-index: 100;
+    color: black;
+    inset: 0;
+    transform: translate(50%, 50%);
+}

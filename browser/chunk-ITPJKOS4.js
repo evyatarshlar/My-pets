@@ -1,0 +1,1 @@
+import{Ua as o,vb as r}from"./chunk-OYHVDZPP.js";var a=(()=>{class i{constructor(){}onClick(t){t.stopPropagation()}static{this.\u0275fac=function(e){return new(e||i)}}static{this.\u0275dir=o({type:i,selectors:[["","evStop",""]],hostBindings:function(e,n){e&1&&r("click",function(c){return n.onClick(c)})}})}}return i})();export{a};
