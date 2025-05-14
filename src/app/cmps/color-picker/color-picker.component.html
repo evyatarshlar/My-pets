@@ -1,7 +1,7 @@
 <section class="color-picker">
 	<h1>Pick A Color</h1>
 	<section class="colors">
-		@for (_color of colors; track color) {
+		@for (_color of colors; track _color) {
 			<div
 				(click)="color.set(_color)"
 				[class.chosen]="color() === _color"
