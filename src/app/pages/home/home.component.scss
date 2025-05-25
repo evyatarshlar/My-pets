@@ -1,5 +1,35 @@
 /* src/app/home/home.component.css */
-h1 {
-    color: navy;
-    margin-bottom: 15px;
+// h1 {
+//     color: navy;
+//     margin-bottom: 15px;
+// }
+
+
+.my-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .my-profile {
+        width: 8em;
+        border-radius: 50%;
+        margin: 1em;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+}
+
+h2 {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+p {
+    font-weight: bold;
+    width: clamp(30ch, 90%, 65ch);
+    margin: 1rem auto;
+    text-align: justify;
 }

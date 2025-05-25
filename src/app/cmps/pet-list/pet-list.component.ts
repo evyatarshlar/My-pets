@@ -16,8 +16,4 @@ export class PetListComponent {
     pets = input<Pet[] | null>()
     remove = output<string>()
 
-
-    doNothing() {
-    }
-
 }

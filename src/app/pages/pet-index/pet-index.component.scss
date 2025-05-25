@@ -1,0 +1,25 @@
+
+    a {
+  background-image: linear-gradient(to right, #ffb347 0%, #ffcc33  51%, #ffb347  100%);
+  max-width: 200px;
+  margin-bottom: 20px;
+  padding: 15px 45px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 18px;
+  display: block;
+  border: none;
+}
+
+
+a:hover {
+  background-position: right center;
+  color: #fff;
+  text-decoration: none;
+} 

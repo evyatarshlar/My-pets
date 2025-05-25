@@ -23,7 +23,7 @@ export class AppHeaderComponent {
 
 
     isShowColorPicker = false
-    headerColor = '#4caf50' //* for old demo
+    headerColor = '#ffb74d' //* for old demo
     
-    headerColorSignal = signal('#4caf50')
+    headerColorSignal = signal('#ffb74d')
 }
