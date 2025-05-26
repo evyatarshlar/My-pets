@@ -79,7 +79,7 @@ export class AboutComponent {
 
 
     handleText(txt: string) {
-        console.log(txt)
+        // console.log(txt)
     }
 
     onPrint() {

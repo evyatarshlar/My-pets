@@ -1,165 +1,76 @@
 <section class="about">
-	<h1 class="title">About Us And Pets..</h1>
-	<p>
-		<!-- {{lorem | naturalType}} -->
-	</p>
+	<!-- <h1 class="title">About Us And Pets..</h1> -->
+
 	<section #some highlight (onContentChange)="handleText($event)">
-		<br />
-		<h2>Pipes</h2>
-		<p>greet: {{ greet | slice: 1 : 6 | titlecase }}</p>
-		<p>date: {{ birthDate | date: "d/M/yyyy, EEEE, h:mm:ss" }}</p>
-		<p>currency: {{ currency | currency: "ILS" }}</p>
+		<div class="my-img">
+			<img src="https://res.cloudinary.com/dv2brrhll/image/upload/v1742938708/evyatar_j0lnsh.png"
+				alt="Header icon" class="my-profile" />
+		</div>
+
+		<h2>About Me</h2>
+
+		<p>
+			Hello, and welcome! My name is Evyatar Shlar, I’m a Full-Stack Web Developer with a passion for building
+			intuitive, high-performance web applications. My expertise lies in creating seamless single-page
+			applications
+			(SPAs) using modern web technologies like Node.js, Vue.js, Vuex, React.js, and Angular. I specialize in
+			crafting
+			dynamic, scalable solutions that prioritize both functionality and user experience.
+		</p>
+
+		<p>
+			With a strong foundation in modern JavaScript (ES6), MVC frameworks, and server-side programming, I focus on
+			writing clean, efficient code that is both scalable and maintainable. Whether I’m working on a React app,
+			building APIs with Node.js, or managing databases with MongoDB, I bring a deep attention to detail and a
+			problem-solving mindset to every project I take on.
+		</p>
+
+		<p>
+			I am not just a developer; I’m a self-motivated, quick learner who adapts easily to new technologies and
+			environments. I thrive in collaborative settings and enjoy tackling challenges, whether they involve
+			technical
+			obstacles or designing solutions that align with users' needs. My professional journey, which includes roles
+			in
+			B2B sales, bookkeeping, and procurement management, has given me valuable skills in communication, time
+			management, and customer service that complement my technical expertise.
+		</p>
+
+		<p>
+			Check out my latest project, an Airbnb clone I built using React, Node, and MongoDB: <a
+				href="https://bestbnb.onrender.com/">Bestbnb</a> Marketplace. It’s a full-fledged e-commerce platform
+			that
+			showcases my ability to develop end-to-end solutions, from the user interface to the backend.
+		</p>
+
+		<p>
+			I’m always looking for new opportunities to grow and contribute, and I’m excited to bring my technical
+			skills,
+			adaptability, and dedication to your team.
+		</p>
 	</section>
 
 	<section (click)="onPrint()">
 		<br />
 		<h2>Custom Pipes</h2>
 		<p>date-desc: {{ date | dateDesc }}</p>
-		<!-- <p>Fetch Data: {{url|fetchData | json}}</p> -->
-		@if (pets) {
-			<pet-list [pets]="pets"></pet-list>
+		<!-- @if (pets) {
+		<pet-list [pets]="pets"></pet-list>
 		}
-		<!-- <pet-list [pets]="pets|filterArr:'name':'pen'"></pet-list> -->
 		<button evStop (click)="onChangePetName()">change pet name</button>
 		<button (click)="onChangePetNameImmutable()">change pet name immutable</button>
-		<button (click)="onChangePetNameImmutableDeep()">change pet name immutable deep</button>
+		<button (click)="onChangePetNameImmutableDeep()">change pet name immutable deep</button> -->
 	</section>
 
-	<section>
-		<br />
-		<!-- <h2>Async Pipe</h2>
-    <p>Promise: {{prm|async}}</p>
-    <p>Observable: {{obs$|async}}</p> -->
-	</section>
-
+	<!-- @defer (on viewport) {
+	<img src="https://picsum.photos/200/300" alt="" />
 	<p>
-		Lorem, ipsum dolor sit amet consectetur adipisicing elit. At officia vitae nisi animi veniam
-		fugit sed minima sequi adipisci quaerat, ab ut distinctio repellat accusamus molestiae
-		mollitia, doloremque dicta! Quam fuga, saepe cupiditate earum rerum amet cumque,
-		reprehenderit dolorem obcaecati fugit deleniti facilis iste officiis sapiente ex sit natus
-		impedit aspernatur veniam expedita blanditiis quibusdam? Excepturi fuga cupiditate omnis
-		est. Adipisci, delectus nesciunt rem dolor ullam perspiciatis soluta odio eveniet ipsa
-		tenetur voluptatem saepe corporis error sequi rerum culpa consequatur ipsum doloribus
-		exercitationem harum? Rem aut voluptatem placeat necessitatibus, id quaerat iure nostrum
-		sapiente! Debitis, dolorum! Consectetur numquam odit tempore quam cupiditate corporis
-		molestiae natus eligendi. Ea sit accusamus eligendi iste nisi, velit assumenda. Facilis
-		ratione deserunt sequi similique cupiditate.
+		Lorem, ipsum dolor sit amet consectetur adipisicing elit. At officia vitae nisi animi
+		veniam fugit sed minima sequi adipisci quaerat, ab ut distinctio repellat accusamus
+		. Ea sit accusamus eligendi iste nisi, velit
+		assumenda. Facilis ratione deserunt sequi similique cupiditate.
 	</p>
 
-	<p>
-		Lorem, ipsum dolor sit amet consectetur adipisicing elit. At officia vitae nisi animi veniam
-		fugit sed minima sequi adipisci quaerat, ab ut distinctio repellat accusamus molestiae
-		mollitia, doloremque dicta! Quam fuga, saepe cupiditate earum rerum amet cumque,
-		reprehenderit dolorem obcaecati fugit deleniti facilis iste officiis sapiente ex sit natus
-		impedit aspernatur veniam expedita blanditiis quibusdam? Excepturi fuga cupiditate omnis
-		est. Adipisci, delectus nesciunt rem dolor ullam perspiciatis soluta odio eveniet ipsa
-		tenetur voluptatem saepe corporis error sequi rerum culpa consequatur ipsum doloribus
-		exercitationem harum? Rem aut voluptatem placeat necessitatibus, id quaerat iure nostrum
-		sapiente! Debitis, dolorum! Consectetur numquam odit tempore quam cupiditate corporis
-		molestiae natus eligendi. Ea sit accusamus eligendi iste nisi, velit assumenda. Facilis
-		ratione deserunt sequi similique cupiditate.
-	</p>
-	<p #para>
-		Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid debitis accusantium
-		inventore et earum quam recusandae a eius necessitatibus veniam, magni minima soluta eaque
-		reprehenderit? Error assumenda molestias fugiat hic! Magni atque similique suscipit labore
-		voluptates, quasi ad eius facere saepe obcaecati pariatur!
-	</p>
-
-	@defer (on viewport) {
-		<img src="https://picsum.photos/200/300" alt="" />
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. At officia vitae nisi animi
-			veniam fugit sed minima sequi adipisci quaerat, ab ut distinctio repellat accusamus
-			molestiae mollitia, doloremque dicta! Quam fuga, saepe cupiditate earum rerum amet
-			cumque, reprehenderit dolorem obcaecati fugit deleniti facilis iste officiis sapiente ex
-			sit natus impedit aspernatur veniam expedita blanditiis quibusdam? Excepturi fuga
-			cupiditate omnis est. Adipisci, delectus nesciunt rem dolor ullam perspiciatis soluta
-			odio eveniet ipsa tenetur voluptatem saepe corporis error sequi rerum culpa consequatur
-			ipsum doloribus exercitationem harum? Rem aut voluptatem placeat necessitatibus, id
-			quaerat iure nostrum sapiente! Debitis, dolorum! Consectetur numquam odit tempore quam
-			cupiditate corporis molestiae natus eligendi. Ea sit accusamus eligendi iste nisi, velit
-			assumenda. Facilis ratione deserunt sequi similique cupiditate.
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. At officia vitae nisi animi
-			veniam fugit sed minima sequi adipisci quaerat, ab ut distinctio repellat accusamus
-			molestiae mollitia, doloremque dicta! Quam fuga, saepe cupiditate earum rerum amet
-			cumque, reprehenderit dolorem obcaecati fugit deleniti facilis iste officiis sapiente ex
-			sit natus impedit aspernatur veniam expedita blanditiis quibusdam? Excepturi fuga
-			cupiditate omnis est. Adipisci, delectus nesciunt rem dolor ullam perspiciatis soluta
-			odio eveniet ipsa tenetur voluptatem saepe corporis error sequi rerum culpa consequatur
-			ipsum doloribus exercitationem harum? Rem aut voluptatem placeat necessitatibus, id
-			quaerat iure nostrum sapiente! Debitis, dolorum! Consectetur numquam odit tempore quam
-			cupiditate corporis molestiae natus eligendi. Ea sit accusamus eligendi iste nisi, velit
-			assumenda. Facilis ratione deserunt sequi similique cupiditate.
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. At officia vitae nisi animi
-			veniam fugit sed minima sequi adipisci quaerat, ab ut distinctio repellat accusamus
-			molestiae mollitia, doloremque dicta! Quam fuga, saepe cupiditate earum rerum amet
-			cumque, reprehenderit dolorem obcaecati fugit deleniti facilis iste officiis sapiente ex
-			sit natus impedit aspernatur veniam expedita blanditiis quibusdam? Excepturi fuga
-			cupiditate omnis est. Adipisci, delectus nesciunt rem dolor ullam perspiciatis soluta
-			odio eveniet ipsa tenetur voluptatem saepe corporis error sequi rerum culpa consequatur
-			ipsum doloribus exercitationem harum? Rem aut voluptatem placeat necessitatibus, id
-			quaerat iure nostrum sapiente! Debitis, dolorum! Consectetur numquam odit tempore quam
-			cupiditate corporis molestiae natus eligendi. Ea sit accusamus eligendi iste nisi, velit
-			assumenda. Facilis ratione deserunt sequi similique cupiditate.
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. At officia vitae nisi animi
-			veniam fugit sed minima sequi adipisci quaerat, ab ut distinctio repellat accusamus
-			molestiae mollitia, doloremque dicta! Quam fuga, saepe cupiditate earum rerum amet
-			cumque, reprehenderit dolorem obcaecati fugit deleniti facilis iste officiis sapiente ex
-			sit natus impedit aspernatur veniam expedita blanditiis quibusdam? Excepturi fuga
-			cupiditate omnis est. Adipisci, delectus nesciunt rem dolor ullam perspiciatis soluta
-			odio eveniet ipsa tenetur voluptatem saepe corporis error sequi rerum culpa consequatur
-			ipsum doloribus exercitationem harum? Rem aut voluptatem placeat necessitatibus, id
-			quaerat iure nostrum sapiente! Debitis, dolorum! Consectetur numquam odit tempore quam
-			cupiditate corporis molestiae natus eligendi. Ea sit accusamus eligendi iste nisi, velit
-			assumenda. Facilis ratione deserunt sequi similique cupiditate.
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. At officia vitae nisi animi
-			veniam fugit sed minima sequi adipisci quaerat, ab ut distinctio repellat accusamus
-			molestiae mollitia, doloremque dicta! Quam fuga, saepe cupiditate earum rerum amet
-			cumque, reprehenderit dolorem obcaecati fugit deleniti facilis iste officiis sapiente ex
-			sit natus impedit aspernatur veniam expedita blanditiis quibusdam? Excepturi fuga
-			cupiditate omnis est. Adipisci, delectus nesciunt rem dolor ullam perspiciatis soluta
-			odio eveniet ipsa tenetur voluptatem saepe corporis error sequi rerum culpa consequatur
-			ipsum doloribus exercitationem harum? Rem aut voluptatem placeat necessitatibus, id
-			quaerat iure nostrum sapiente! Debitis, dolorum! Consectetur numquam odit tempore quam
-			cupiditate corporis molestiae natus eligendi. Ea sit accusamus eligendi iste nisi, velit
-			assumenda. Facilis ratione deserunt sequi similique cupiditate.
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. At officia vitae nisi animi
-			veniam fugit sed minima sequi adipisci quaerat, ab ut distinctio repellat accusamus
-			molestiae mollitia, doloremque dicta! Quam fuga, saepe cupiditate earum rerum amet
-			cumque, reprehenderit dolorem obcaecati fugit deleniti facilis iste officiis sapiente ex
-			sit natus impedit aspernatur veniam expedita blanditiis quibusdam? Excepturi fuga
-			cupiditate omnis est. Adipisci, delectus nesciunt rem dolor ullam perspiciatis soluta
-			odio eveniet ipsa tenetur voluptatem saepe corporis error sequi rerum culpa consequatur
-			ipsum doloribus exercitationem harum? Rem aut voluptatem placeat necessitatibus, id
-			quaerat iure nostrum sapiente! Debitis, dolorum! Consectetur numquam odit tempore quam
-			cupiditate corporis molestiae natus eligendi. Ea sit accusamus eligendi iste nisi, velit
-			assumenda. Facilis ratione deserunt sequi similique cupiditate.
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. At officia vitae nisi animi
-			veniam fugit sed minima sequi adipisci quaerat, ab ut distinctio repellat accusamus
-			molestiae mollitia, doloremque dicta! Quam fuga, saepe cupiditate earum rerum amet
-			cumque, reprehenderit dolorem obcaecati fugit deleniti facilis iste officiis sapiente ex
-			sit natus impedit aspernatur veniam expedita blanditiis quibusdam? Excepturi fuga
-			cupiditate omnis est. Adipisci, delectus nesciunt rem dolor ullam perspiciatis soluta
-			odio eveniet ipsa tenetur voluptatem saepe corporis error sequi rerum culpa consequatur
-			ipsum doloribus exercitationem harum? Rem aut voluptatem placeat necessitatibus, id
-			quaerat iure nostrum sapiente! Debitis, dolorum! Consectetur numquam odit tempore quam
-			cupiditate corporis molestiae natus eligendi. Ea sit accusamus eligendi iste nisi, velit
-			assumenda. Facilis ratione deserunt sequi similique cupiditate.
-		</p>
 	} @placeholder (minimum 2s) {
-		<loader-svg></loader-svg>
-	}
+	<loader-svg></loader-svg>
+	} -->
 </section>
