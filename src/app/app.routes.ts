@@ -13,6 +13,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent),
     },
     {
+        path: 'progress',
+        loadComponent: () => import('./pages/progress/progress.component').then(m => m.ProgressComponent),
+    },
+    {
         path: 'pets',
         loadComponent: () => import('./pages/pet-index/pet-index.component').then(m => m.PetIndexComponent),
         children: [
