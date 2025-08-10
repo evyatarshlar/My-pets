@@ -1,10 +1,39 @@
 <section class="progress-page">
-  <h1>Progress Page</h1>
+  <!-- Progress Bar Header -->
+  <div class="progress-header">
+    <h1>Progress Page</h1>
+
+    <!-- Progress Bar Container -->
+    <div class="progress-container">
+      <div class="progress-track">
+       
+        <!-- 4 segment dividers for visual reference -->
+        <!-- <div class="segment-dividers">
+          <div class="divider" style="left: 25%"></div>
+          <div class="divider" style="left: 50%"></div>
+          <div class="divider" style="left: 75%"></div>
+        </div> -->
+
+        
+        <!-- Chart overlay -->
+        <div class="chart-overlay">
+          <div echarts [options]="chartOptions" class="chart-container">
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress percentage display -->
+      <div class="progress-text">
+        {{ scrollProgress.toFixed(1) }}%
+      </div>
+    </div>
+  </div>
+
+  <!-- Numbers content -->
   <div class="numbers-container">
-    <div 
-      class="number-item" 
-      *ngFor="let number of numbers; let i = index"
-      [style.margin-top.px]="i > 0 ? 20 * 20 : 0">
+    <div class="number-item"
+    *ngFor="let number of numbers; let i = index"
+    [style.margin-top.px]="margins[i]">
       {{ number }}
     </div>
   </div>
