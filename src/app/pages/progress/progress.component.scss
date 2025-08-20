@@ -29,11 +29,16 @@
         flex: 1;
         height: 60px;
         background-color: #c5c5c5ff;
-        border-radius: 30px;
         position: relative;
         overflow: hidden; 
         direction: ltr; 
         transition: background-color 0.3s ease;
+        
+        &:first-of-type {
+          border-radius: 0 30px 30px 0; /* פינות עגולות בצד ימין */
+        }
+        
+       
         
         .segment-dividers {
           position: absolute;
@@ -61,7 +66,6 @@
           bottom: 0;
           // pointer-events: auto; /* Enable pointer events for tooltip */
           z-index: 2; /* Above the progress fill */
-          // border-radius: 30px; /* Match the outer radius */
           overflow: hidden; /* Maintain rounded corners */
           
           .chart-container {
@@ -72,6 +76,30 @@
             // border-radius: 30px; /* Ensure chart respects rounded corners */
             // opacity: 0.9; /* Slight transparency for better visibility */
           }
+        }
+        
+        &:first-of-type .chart-overlay {
+          border-radius: 0 30px 30px 0; /* פינות עגולות בצד ימין עבור הגרף הימני */
+        }
+        
+        &:last-of-type .chart-overlay {
+          border-radius: 30px 0 0 30px; /* פינות עגולות בצד שמאל עבור הגרף השמאלי */
+        }
+      }
+      
+      .chart-gap {
+        width: 2.5rem;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        &::after {
+          content: '';
+          width: 2px;
+          height: 20px;
+          background-color: #ddd;
+          border-radius: 1px;
         }
       }
       
@@ -111,3 +139,9 @@
     }
   }
 }
+
+
+
+ .bbb {
+          border-radius: 30px 0px 0px 30px; /* פינות עגולות בצד שמאל */
+        }

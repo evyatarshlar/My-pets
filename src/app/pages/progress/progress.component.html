@@ -5,19 +5,23 @@
 
     <!-- Progress Bar Container -->
     <div class="progress-container">
+      <!-- First Chart (0-50%) -->
       <div class="progress-track">
-       
-        <!-- 4 segment dividers for visual reference -->
-        <!-- <div class="segment-dividers">
-          <div class="divider" style="left: 25%"></div>
-          <div class="divider" style="left: 50%"></div>
-          <div class="divider" style="left: 75%"></div>
-        </div> -->
-
-        
         <!-- Chart overlay -->
         <div class="chart-overlay">
-          <div echarts [options]="chartOptions" class="chart-container">
+          <div echarts [options]="chartOptions1" class="chart-container">
+          </div>
+        </div>
+      </div>
+
+      <!-- Gap between charts -->
+      <div class="chart-gap"></div>
+
+      <!-- Second Chart (50-100%) -->
+      <div class="progress-track bbb">
+        <!-- Chart overlay -->
+        <div class="chart-overlay">
+          <div echarts [options]="chartOptions2" class="chart-container">
           </div>
         </div>
       </div>
