@@ -35,10 +35,16 @@
 
   <!-- Numbers content -->
   <div class="numbers-container">
-    <div class="number-item"
-    *ngFor="let number of numbers; let i = index"
-    [style.margin-top.px]="margins[i]">
+    <div class="number-item" *ngFor="let number of numbers; let i = index" [style.margin-top.px]="margins[i]">
       {{ number }}
+    </div>
+  </div>
+
+  <!-- Learning Tracker Modal -->
+  <div *ngIf="showLearningTracker" class="learning-tracker-modal" (clickOutside)="onModalClickOutside()">
+    <div class="modal-content">
+      <button class="close-btn" (click)="closeLearningTrackerModal()">✕</button>
+      <app-learning-tracker></app-learning-tracker>
     </div>
   </div>
 </section>

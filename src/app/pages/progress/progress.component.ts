@@ -6,13 +6,15 @@ import * as echarts from 'echarts/core';
 import { LineChart, ScatterChart } from 'echarts/charts';
 import { GridComponent, VisualMapComponent, TooltipComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
+import { LearningTrackerComponent } from '../learning-tracker/learning-tracker.component';
+import { ModalDirective } from '../../directives/modal.directive';
 
 echarts.use([LineChart, ScatterChart, GridComponent, VisualMapComponent, TooltipComponent, CanvasRenderer]);
 
 @Component({
   selector: 'app-progress',
   standalone: true,
-  imports: [CommonModule, NgxEchartsDirective],
+  imports: [CommonModule, NgxEchartsDirective, LearningTrackerComponent, ModalDirective],
   providers: [provideEchartsCore({ echarts })],
   templateUrl: './progress.component.html',
   styleUrls: ['./progress.component.scss']
@@ -25,6 +27,11 @@ export class ProgressComponent implements OnInit, OnDestroy {
   scrollProgress: number = 0; // ** קשור לנקודת ההתקדמות - אחוז ההתקדמות הכללי בגלילה **
   chartOptions1: EChartsOption = {}; // ** קשור לפיצול הגרף - אפשרויות הגרף הראשון (0-50%) **
   chartOptions2: EChartsOption = {}; // ** קשור לפיצול הגרף - אפשרויות הגרף השני (50%-100%) **
+  
+  // משתנים עבור ה-learning tracker modal
+  showLearningTracker: boolean = false;
+  lastQuarterShown: number = -1; // איזה רבע הוצג לאחרונה
+  modalAutoCloseTimer: any;
 
   ngOnInit(): void {
     this.generateRandomNumbers();
@@ -33,12 +40,16 @@ export class ProgressComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // Clean up any event listeners if needed
+    if (this.modalAutoCloseTimer) {
+      clearTimeout(this.modalAutoCloseTimer);
+    }
   }
 
   @HostListener('window:scroll', ['$event'])
   onScroll(): void {
     this.calculateScrollProgress();
     this.updateChart();
+    this.checkLearningTrackerModal();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -378,27 +389,37 @@ export class ProgressComponent implements OnInit, OnDestroy {
       animation: false
     };
   }
-}
 
-
-
-  // // המרה לפורמט של סרגל ההתקדמות
-  // const totalLines = learningMapSections[learningMapSections.length - 1].lineRef;
-  // this.sections = learningMapSections.map((learningMapSection, index) => {
-  //   // מיקום ישירות על בסיס lineRef (קואורדינטות הטקסט) במקום אחוזים
-  //   const position = learningMapSection.lineRef || 0;
-
-  //   // קבלת רמת קושי מהדאטה בייס (אם קיים) או חישוב על פי אורך הקטע כגיבוי
-  //   let difficulty = 1; // ברירת מחדל
+  // פונקציות עבור ה-learning tracker modal
+  checkLearningTrackerModal(): void {
+    // חישוב איזה רבע של הדף אנחנו נמצאים בו (0, 1, 2, 3)
+    const currentQuarter = Math.floor(this.scrollProgress / 25);
     
-  //   if (learningMapSection.difficultyLevel && learningMapSection.difficultyLevel >= 1 && learningMapSection.difficultyLevel <= 3) {
-  //     // אם יש רמת קושי בדאטה בייס - השתמש בה
-  //     difficulty = learningMapSection.difficultyLevel;
-  //     // console.log(`📊 קטע "${learningMapSection.title}" - רמת קושי מהדאטה בייס: ${difficulty}`);
-  //   } else {
-  //     // אם אין רמת קושי בדאטה בייס - חשב על פי אורך הקטע (לוגיקה קיימת)
-  //     const sectionLength = (learningMapSection.lineRef || 0) - (learningMapSection.lineStart || 0) + 1;
-  //     if (sectionLength > totalLines * 0.3) difficulty = 3; // יותר מ-30% מהדף
-  //     else if (sectionLength > totalLines * 0.15) difficulty = 2; // יותר מ-15% מהדף
-  //     // console.log(`🔢 קטע "${learningMapSection.title}" - רמת קושי מחושבת: ${difficulty} (אורך: ${sectionLength} מתוך ${totalLines})`);
-  //   }
+    // אם עברנו רבע חדש ועדיין לא הצגנו אותו
+    if (currentQuarter > this.lastQuarterShown && currentQuarter > 0) {
+      this.showLearningTrackerModal();
+      this.lastQuarterShown = currentQuarter;
+    }
+  }
+
+  showLearningTrackerModal(): void {
+    this.showLearningTracker = true;
+    
+    // סגירה אוטומטית לאחר 5 שניות
+    this.modalAutoCloseTimer = setTimeout(() => {
+      this.closeLearningTrackerModal();
+    }, 100000);
+  }
+
+  closeLearningTrackerModal(): void {
+    this.showLearningTracker = false;
+    if (this.modalAutoCloseTimer) {
+      clearTimeout(this.modalAutoCloseTimer);
+      this.modalAutoCloseTimer = null;
+    }
+  }
+
+  onModalClickOutside(): void {
+    this.closeLearningTrackerModal();
+  }
+}
