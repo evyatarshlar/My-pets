@@ -17,6 +17,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/progress/progress.component').then(m => m.ProgressComponent),
     },
     {
+        path: 'learning-tracker',
+        loadComponent: () => import('./pages/learning-tracker/learning-tracker.component').then(m => m.LearningTrackerComponent),
+    },
+    {
         path: 'pets',
         loadComponent: () => import('./pages/pet-index/pet-index.component').then(m => m.PetIndexComponent),
         children: [
