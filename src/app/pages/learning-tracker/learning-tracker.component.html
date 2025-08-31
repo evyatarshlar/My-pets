@@ -1,0 +1,73 @@
+<div *ngIf="show25PercentMessage" class="message-overlay">
+  <div class="message-container">
+    <div class="message-card">
+      <div class="claps-icon animate-tada">👍</div>
+      <p class="title-text">משה</p>
+      <p class="score-text">
+        צברת <b>{{score}}</b> נקודות מתוך <b>200</b>
+      </p>
+      <p class="king-text">מלך שאתה</p>
+    </div>
+  </div>
+</div>
+
+<div class="tracker-container">
+  <div class="header">
+    <h2>ההתמדה שלי</h2>
+  </div>
+  <div class="header2">
+    <div class="level">
+      <span class="star animate-tada">⭐</span>
+      <span>שלב</span>
+      <span [ymiCountUp]="level" [duration]="100"></span>
+    </div>
+
+    <div class="score">
+      <span>+</span>
+      <span class="numbers" [ymiCountUp]="score" [duration]="3000"></span>
+      <!-- <img src="../../../assets/img/coin.png" alt="Coin" class="coin-icon" /> -->
+      <div class="container1">
+        <div class="bouncing-icon">
+          <img src="../../../assets/img/coin.png" alt="Coin" class="coin-icon" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pathway">
+    <div class="character" [style.top]="characterTop" [style.left]="characterLeft"
+      [style.transform]="shouldFlipCharacter ? 'scaleX(-1)' : ''">
+      <img src="../../../assets/img/YOMI.png" alt="Character">
+    </div>
+
+    <div *ngFor="let step of steps; let i = index" class="step-wrapper step-{{ i }}">
+      <div class="circle" [ngClass]="{
+          'current': i === currentStepIndex,
+          'completed': i < currentStepIndex,
+          'inactive': i > currentStepIndex
+        }">
+        <span *ngIf="i < currentStepIndex" class="checkmark">✔</span>
+        <span *ngIf="step.icon && i >= currentStepIndex" class="step-icon">{{ step.icon }}</span>
+        <!-- טולטיפ למעגל INACTIVE -->
+        <ng-container *ngIf="i > currentStepIndex">
+          <div class="inactive-tooltip" *ngIf="activeTooltipIndex === i">
+            השלם את כל השלבים הקודמים כדי לפתוח את זה!
+            <button disabled style="margin-top:8px;">🔒</button>
+            <span class="close-tooltip" (click)="activeTooltipIndex = null">✖</span>
+          </div>
+        </ng-container>
+        <!-- טולטיפ למעגל CURRENT כשהגיע ל-100% גלילה -->
+        <ng-container *ngIf="i === currentStepIndex && i === 4">
+          <div class="current-tooltip">
+            סיימת את הלימוד בהצלחה! נתראה מחר!
+            <span class="close-tooltip" (click)="closeCurrentTooltip()">✖</span>
+          </div>
+        </ng-container>
+        <div *ngIf="i > currentStepIndex" class="circle-overlay" (click)="activeTooltipIndex = i"></div>
+      </div>
+
+      <span *ngIf="step.label" class="label" [class.label-today]="i === currentStepIndex">{{ step.label }}</span>
+    </div>
+  </div>
+</div>
