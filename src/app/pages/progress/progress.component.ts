@@ -7,14 +7,13 @@ import { LineChart, ScatterChart } from 'echarts/charts';
 import { GridComponent, VisualMapComponent, TooltipComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 import { LearningTrackerComponent } from '../learning-tracker/learning-tracker.component';
-import { ModalDirective } from '../../directives/modal.directive';
 
 echarts.use([LineChart, ScatterChart, GridComponent, VisualMapComponent, TooltipComponent, CanvasRenderer]);
 
 @Component({
   selector: 'app-progress',
   standalone: true,
-  imports: [CommonModule, NgxEchartsDirective, LearningTrackerComponent, ModalDirective],
+  imports: [CommonModule, NgxEchartsDirective, LearningTrackerComponent],
   providers: [provideEchartsCore({ echarts })],
   templateUrl: './progress.component.html',
   styleUrls: ['./progress.component.scss']
@@ -27,6 +26,12 @@ export class ProgressComponent implements OnInit, OnDestroy {
   scrollProgress: number = 0; // ** קשור לנקודת ההתקדמות - אחוז ההתקדמות הכללי בגלילה **
   chartOptions1: EChartsOption = {}; // ** קשור לפיצול הגרף - אפשרויות הגרף הראשון (0-50%) **
   chartOptions2: EChartsOption = {}; // ** קשור לפיצול הגרף - אפשרויות הגרף השני (50%-100%) **
+  // דגל איפוס כדי להתעלם מאירועי גלילה בזמן מעבר דף (Option 1)
+  private isResetting: boolean = false;
+  
+  // משתנים עבור מערכת דפים
+  currentPage: number = 1; // העמוד הנוכחי
+  // showNextPageButton: boolean = false; // האם להציג כפתור דף הבא
   
   // משתנים עבור ה-learning tracker modal
   showLearningTracker: boolean = false;
@@ -34,6 +39,7 @@ export class ProgressComponent implements OnInit, OnDestroy {
   modalAutoCloseTimer: any;
 
   ngOnInit(): void {
+    this.loadPageState();
     this.generateRandomNumbers();
     this.initializeChart();
   }
@@ -47,6 +53,8 @@ export class ProgressComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll', ['$event'])
   onScroll(): void {
+  // אם אנחנו בתוך תהליך איפוס (מעבר דף) מתעלמים מאירועי גלילה כדי שלא יתקבל חישוב אחוז שגוי
+  if (this.isResetting) return;
     this.calculateScrollProgress();
     this.updateChart();
     this.checkLearningTrackerModal();
@@ -421,5 +429,80 @@ export class ProgressComponent implements OnInit, OnDestroy {
 
   onModalClickOutside(): void {
     this.closeLearningTrackerModal();
+  }
+
+  // פונקציות עבור מערכת דפים
+  private loadPageState(): void {
+    const pageState = localStorage.getItem('progressPageState');
+    if (pageState) {
+      try {
+        const state = JSON.parse(pageState);
+        this.currentPage = state.currentPage ?? 1;
+      } catch {}
+    }
+  }
+
+  private savePageState(): void {
+    localStorage.setItem('progressPageState', JSON.stringify({
+      currentPage: this.currentPage
+    }));
+  }
+
+  private getPageNumbers(): number[] {
+    // כל עמוד מכיל 4 מספרים רצופים
+    // עמוד 1: [1,2,3,4], עמוד 2: [5,6,7,8], עמוד 3: [9,10,11,12] וכו'
+    const startNumber = (this.currentPage - 1) * 4 + 1;
+    return [startNumber, startNumber + 1, startNumber + 2, startNumber + 3];
+  }
+  nextPage(): void {
+    this.currentPage++;
+    this.savePageState();
+    this.updateLearningTrackerForNewPage();
+
+    // גלילה חלקה לראש הדף
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // נמתין שהדף באמת הגיע ל-0 לפני איפוס נתונים כדי לא לקבל חישוב שגוי מהגובה הישן
+    this.waitForScrollTopZero().then(() => {
+      this.lastQuarterShown = -1; // איפוס מודאל רבעים
+      // יצירת מספרים חדשים ורענון גרפים אחרי שהגענו לראש
+      this.generateRandomNumbers();
+      this.initializeChart();
+    });
+  }
+
+  // המתנה אסינכרונית עד שהגלילה הגיעה לראש (או timeout בטחון)
+  private waitForScrollTopZero(timeoutMs: number = 1200): Promise<void> {
+    return new Promise(resolve => {
+      const start = performance.now();
+      const check = () => {
+        if (window.scrollY === 0 || (performance.now() - start) > timeoutMs) {
+          resolve();
+        } else {
+          requestAnimationFrame(check);
+        }
+      };
+      check();
+    });
+  }
+
+  private updateLearningTrackerForNewPage(): void {
+    // עדכון מצב ה-learning tracker עבור העמוד החדש
+    const trackerState = localStorage.getItem('learningTrackerState');
+    if (trackerState) {
+      try {
+        const state = JSON.parse(trackerState);
+        // שמירת הצבירה של השלבים שהושלמו
+        state.totalStepsCompleted = (this.currentPage - 1) * 4;
+        state.currentPage = this.currentPage;
+        state.currentStepIndex = (this.currentPage - 1) * 4; // איפוס למצב ההתחלה של העמוד החדש
+        localStorage.setItem('learningTrackerState', JSON.stringify(state));
+      } catch {}
+    }
+  }
+
+  getCurrentPageDisplay(): string {
+    const numbers = this.getPageNumbers();
+    return `Steps ${numbers[0]}-${numbers[3]}`;
   }
 }
