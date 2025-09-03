@@ -22,6 +22,7 @@
     "ngx-echarts": "^20.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "tsparticles": "^3.9.1",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
