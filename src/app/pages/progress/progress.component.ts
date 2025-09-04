@@ -416,7 +416,7 @@ export class ProgressComponent implements OnInit, OnDestroy {
     // סגירה אוטומטית לאחר 5 שניות
     this.modalAutoCloseTimer = setTimeout(() => {
       this.closeLearningTrackerModal();
-    }, 100000);
+    }, 88000);
   }
 
   closeLearningTrackerModal(): void {

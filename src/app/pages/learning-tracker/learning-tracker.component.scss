@@ -87,13 +87,13 @@
 }
 
 .animate-popIn{
-  animation: popIn 0.7s;
+  animation: popIn 0.7s ease-in-out;
 }
 
 @keyframes popIn {
-  0% { transform: scale(0.7) translateX(-50%); opacity: 0; }
-  80% { transform: scale(1.2) translateX(-50%); opacity: 1; }
-  100% { transform: scale(1) translateX(-50%); opacity: 1; }
+  0% { transform: scale(0.7) ; opacity: 0; }
+  80% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 
@@ -124,15 +124,46 @@
         transform: translateY(0) scale(1) rotateZ(0deg);
     }
     50% {
-        /* קפיצה לגובה, גדילה פי 20 וסיבוב של 360 מעלות */
-        transform: translateY(-100px) scale(10) rotateZ(360deg); 
+        /* קפיצה לגובה, גדילה פי 6 וסיבוב של 360 מעלות */
+        transform: translateY(-100px) scale(6) rotateZ(-360deg); 
     }
     100% {
         /* איפוס גובה, שמירה על גודל וסיבוב בסוף האנימציה */
-        transform: translateY(0) scale(1) rotateZ(360deg); 
+        transform: translateY(0) scale(1) rotateZ(-360deg); 
     }
 }
 
+
+// הגדרת משתנים
+$fill-color: #B9E757;
+$text-color: #0C4C40;
+$fill-duration: 1.5s;
+
+// העיצוב הבסיסי של הכרטיס
+.card {
+  background-color: transparent;
+}
+
+// האלמנט שמבצע את המילוי
+.progress-fill {
+  // המילוי מתחיל מעל גבול הכרטיס (100% למעלה)
+  transform: translateY(-100%);
+  transition: transform $fill-duration ease-out;
+}
+
+// קלאס שיפעיל את האנימציה
+.fill-start {
+  transform: translateY(0); // מזיז את המילוי למצב תקין
+}
+
+// עיצוב שאר האלמנטים
+.card-content {
+  color: $text-color;
+  .card-icon {
+    background-color: $fill-color;
+    color: $text-color;
+  }
+}
 // :host {
 //   display: flex;
 //   justify-content: center;

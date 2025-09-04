@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit, AfterViewInit, ViewChild, ElementRef }
 import { CommonModule } from '@angular/common';
 import { CountUpDirective } from '../count-ap-directive';
 import { FireworkManager } from '../firework.utils';
+import { AudioService } from '../../services/audio.service';
 
 // Interface for each learning step
 interface LearningStep {
@@ -19,8 +20,25 @@ interface LearningStep {
 export class LearningTrackerComponent implements OnInit, AfterViewInit {
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
   
+    // Reference to the progress fill element
+  @ViewChild('progressFill') progressFillRef!: ElementRef;
+    @ViewChild('bubblesContainer') bubblesContainerRef!: ElementRef; // הוספנו הפניה לקונטיינר הבועות
+
   // Fireworks manager
   private fireworkManager!: FireworkManager;
+  
+  constructor(private audioService: AudioService) {}
+  
+  // כפתור פיתוח להפעלת זיקוקים ידנית
+  devTriggerFireworks(): void {
+    if (!this.fireworkManager) {
+        this.initFireworkManager();
+      }
+      this.fireworkManager?.startFireworks();
+      setTimeout(() => {
+        this.fireworkManager?.stopFireworks();
+      }, 5000);
+    }
   
   steps: LearningStep[] = [
     { label: 'היום' },
@@ -33,14 +51,13 @@ export class LearningTrackerComponent implements OnInit, AfterViewInit {
     { icon: '❓' },
     { icon: '🎁' },
   ];
-
+  
   score = 0;
   level = 0;
   currentStepIndex = 0;
   characterTop = '0px';
   characterLeft = '0px';
   activeTooltipIndex: number | null = null;
-  private oldNumberArray: string[] = ["0"]; ////// Store previous number state
   show25PercentMessage = false;
   isScrollComplete: boolean = false;
 
@@ -101,6 +118,18 @@ export class LearningTrackerComponent implements OnInit, AfterViewInit {
         this.fireworkManager = new FireworkManager(canvas, ctx);
       }
     }, 100);
+        this.animateHeaderFill();
+
+  }
+
+    private animateHeaderFill(): void {
+    const progressFill = this.progressFillRef?.nativeElement;
+    if (progressFill) {
+      // Small delay to ensure the element is in the DOM
+      setTimeout(() => {
+        progressFill.classList.add('fill-start');
+      }, 200);
+    }
   }
 
   @HostListener('window:scroll', [])
@@ -109,57 +138,102 @@ export class LearningTrackerComponent implements OnInit, AfterViewInit {
     if (scrollableHeight <= 0) return;
 
     const scrollPercent = (window.scrollY / scrollableHeight) * 100;
-    const targetStep = Math.floor(scrollPercent / 25) + ((this.currentPage - 1) * 4);
-
+    const targetStep = Math.floor(scrollPercent / 25) + ((this.currentPage - 1) * 4);    
     if (targetStep > this.currentStepIndex) {
       const stepsToAdvance = targetStep - this.currentStepIndex;
+      const previousStepIndex = this.currentStepIndex;
+      
       this.score += 50 * stepsToAdvance;
       this.level += stepsToAdvance;
       this.totalStepsCompleted += stepsToAdvance;
       this.currentStepIndex = Math.min(targetStep, this.steps.length - 1);
-      this.updateCharacterPosition();
-      this.saveStateToStorage();
+      // Update character position first, then trigger fireworks
+      this.updateCharacterPosition(() => {
+        // Trigger fireworks after character movement is complete
+        this.triggerFireworksIfNeeded();
+      });
       
-      // Trigger fireworks on completion
-      if (this.currentStepIndex === this.steps.length - 1 || this.currentStepIndex % 4 === 0) {
-        this.fireworkManager?.startFireworks();
-        setTimeout(() => this.fireworkManager?.stopFireworks(), 5000); // Show fireworks for 5 seconds
-      }
+      this.saveStateToStorage();
       
       setTimeout(() => {
         this.show25PercentMessage = true;
         setTimeout(() => {
           this.show25PercentMessage = false;
         }, 3000);
-      }, 1000);
+      }, 2000);
     }
 
     // Set isScrollComplete to true if scrolled to 100% and current step is last
     this.isScrollComplete = scrollPercent >= 100 && this.currentStepIndex === this.steps.length - 1;
   }
 
-  private updateCharacterPosition(): void {
+  private updateCharacterPosition(callback?: () => void): void {
+    this.waveAnimation();
     const characterElement = document.querySelector('.character') as HTMLElement;
     if (characterElement) {
       characterElement.classList.add('moving');
       setTimeout(() => characterElement.classList.remove('moving'), 2000);
     }
-    setTimeout(() => {
-      const currentStepElement = document.querySelector(`.step-${this.currentStepIndex}`) as HTMLElement;
-      if (currentStepElement) {
-        this.characterTop = `${currentStepElement.offsetTop - 40}px`;
-        this.characterLeft = `${currentStepElement.offsetLeft + 200}px`;
-        this.saveStateToStorage();
-      }
-    }, 100);
+    
+    // Use requestAnimationFrame for better timing
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const currentStepElement = document.querySelector(`.step-${this.currentStepIndex}`) as HTMLElement;
+        if (currentStepElement) {
+          this.characterTop = `${currentStepElement.offsetTop - 40}px`;
+          this.characterLeft = `${currentStepElement.offsetLeft + 210}px`;
+          this.saveStateToStorage();
+          this.audioService.playSounds(this.currentStepIndex === 4 ?
+             'mixkit-achievement-bell-600'
+              : 'mixkit-fairy-cartoon-success-voice-344');
+
+          // Execute callback after position update
+          if (callback) {
+            setTimeout(callback, 100); // Small delay to ensure position is set
+          }
+        }
+      }, 150); // Increased delay for better DOM sync
+    });
   }
 
-  // private updateScoreDisplay(): void {
-  //   const scoreElement = document.querySelector('.numbers') as HTMLElement;
-  //   if (scoreElement) {
-  //     this.oldNumberArray = animateNumber(this.score, scoreElement, this.oldNumberArray);
-  //   }
-  // }
+private waveAnimation(): void {   
+  // const headerElement = document.querySelector('.header-container') as HTMLElement;
+  // headerElement.addEventListener('click', function() {
+document.addEventListener('DOMContentLoaded', () => {
+  const progressFill = document.querySelector('.progress-fill') as HTMLElement;
+  
+  // הוספת השהיה קצרה לפני התחלת האנימציה (אופציונלי)
+  setTimeout(() => {
+    progressFill.classList.add('fill-start');
+  }, 200); // 200 מילישניות
+});
+}
+  private triggerFireworksIfNeeded(): void {    
+    // Fireworks should trigger on steps 4 and 8 (0-indexed: 3 and 7), and the final step
+    if (this.currentStepIndex === 4 || this.currentStepIndex === 8 || this.currentStepIndex === this.steps.length - 1) {
+      this.audioService.playSounds('clapping');
+      // Make sure fireworkManager is initialized
+      if (!this.fireworkManager) {
+        this.initFireworkManager();
+      }
+      
+      this.fireworkManager?.startFireworks();
+      setTimeout(() => {
+        this.fireworkManager?.stopFireworks();
+      }, 5000); // Show fireworks for 5 seconds
+    }
+  }
+
+  private initFireworkManager(): void {
+    const canvas = this.canvasRef?.nativeElement;
+    if (canvas) {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const ctx = canvas.getContext('2d')!;
+      this.fireworkManager = new FireworkManager(canvas, ctx);
+    }
+  }
+
     closeCurrentTooltip() {
       this.isScrollComplete = false;
     }
