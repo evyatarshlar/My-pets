@@ -101,6 +101,9 @@ export class ProgressComponent implements OnInit, OnDestroy {
 
     if (scrollHeight > 0) {
       this.scrollProgress = Math.min(100, Math.max(0, (scrollTop / scrollHeight) * 100));
+    if (this.scrollProgress >= 99.5) {
+      this.scrollProgress = 100;
+    }
     } else {
       this.scrollProgress = 0;
     }
@@ -416,7 +419,7 @@ export class ProgressComponent implements OnInit, OnDestroy {
     // סגירה אוטומטית לאחר 5 שניות
     this.modalAutoCloseTimer = setTimeout(() => {
       this.closeLearningTrackerModal();
-    }, 88000);
+    },8000);
   }
 
   closeLearningTrackerModal(): void {

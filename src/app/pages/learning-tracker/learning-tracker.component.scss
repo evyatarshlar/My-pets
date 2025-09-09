@@ -18,49 +18,91 @@
     }
 
 
-    .step-0 {
-  top: 550px;
+.step-0 {
+  top: 450px;
   left: 0px;
+  
+  @media (min-width: 1024px) {
+    top: 550px;
+  }
 }
 
 .step-1 {
-  top: 480px;
-  left: 50px;
+  top: 390px;
+  left: 30px;
+  
+  @media (min-width: 1024px) {
+    top: 480px;
+    left: 50px;
+  }
 }
 
 .step-2 {
-  top: 410px;
-  left: 80px;
+  top: 330px;
+  left: 60px;
+  
+  @media (min-width: 1024px) {
+    top: 410px;
+    left: 80px;
+  }
 }
 
 .step-3 {
-  top: 340px;
-  left: 50px;
+  top: 270px;
+  left: 30px;
+  
+  @media (min-width: 1024px) {
+    top: 340px;
+    left: 50px;
+  }
 }
 
 .step-4 {
-  top: 270px;
+  top: 210px;
   left: 0px;
+  
+  @media (min-width: 1024px) {
+    top: 270px;
+  }
 }
 
 .step-5 {
-  top: 200px;
-  left: -50px;
+  top: 150px;
+  left: -30px;
+  
+  @media (min-width: 1024px) {
+    top: 200px;
+    left: -50px;
+  }
 }
 
 .step-6 {
-  top: 130px;
-  left: -80px;
+  top: 90px;
+  left: -60px;
+  
+  @media (min-width: 1024px) {
+    top: 130px;
+    left: -80px;
+  }
 }
 
 .step-7 {
-  top: 60px;
-  left: -50px;
+  top: 30px;
+  left: -30px;
+  
+  @media (min-width: 1024px) {
+    top: 60px;
+    left: -50px;
+  }
 }
 
 .step-8 {
-  top: -10px;
+  top: -30px;
   left: 0px;
+  
+  @media (min-width: 1024px) {
+    top: -10px;
+  }
 }
 
 
@@ -86,14 +128,19 @@
   }
 }
 
-.animate-popIn{
-  animation: popIn 0.7s ease-in-out;
+.animate-popInOut {
+  animation: popIn 0.7s ease-in-out forwards, fadeOut 1s ease-in forwards;
+  animation-delay: 0s, 4s;  /* האנימציה השנייה מתחילה אחרי 3 שניות */
 }
 
 @keyframes popIn {
-  0% { transform: scale(0.7) ; opacity: 0; }
-  80% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
+  0% { transform: translateX(-50%) scale(0.7); opacity: 1; }
+  80% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+  100% { transform: translateX(-50%) scale(1); opacity: 1; }
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; }
 }
 
 
@@ -134,36 +181,6 @@
 }
 
 
-// הגדרת משתנים
-$fill-color: #B9E757;
-$text-color: #0C4C40;
-$fill-duration: 1.5s;
-
-// העיצוב הבסיסי של הכרטיס
-.card {
-  background-color: transparent;
-}
-
-// האלמנט שמבצע את המילוי
-.progress-fill {
-  // המילוי מתחיל מעל גבול הכרטיס (100% למעלה)
-  transform: translateY(-100%);
-  transition: transform $fill-duration ease-out;
-}
-
-// קלאס שיפעיל את האנימציה
-.fill-start {
-  transform: translateY(0); // מזיז את המילוי למצב תקין
-}
-
-// עיצוב שאר האלמנטים
-.card-content {
-  color: $text-color;
-  .card-icon {
-    background-color: $fill-color;
-    color: $text-color;
-  }
-}
 // :host {
 //   display: flex;
 //   justify-content: center;

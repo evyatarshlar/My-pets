@@ -1,0 +1,111 @@
+.step-0 {
+  top: 235px;
+  left: 290px;
+
+  @media (min-width: 1024px) {
+    top: 80px;
+    left: 618px;
+  }
+}
+
+.step-1 {
+  top: 235px;
+  left: 244.17px;
+
+  @media (min-width: 1024px) {
+    top: 61.19px;
+    left: 535.41px;
+  }
+}
+
+.step-2 {
+  top: 235px;
+  left: 198.33px;
+
+  @media (min-width: 1024px) {
+    top: 78.13px;
+    left: 449.78px;
+  }
+}
+
+.step-3 {
+  top: 235px;
+  left: 152.50px;
+
+  @media (min-width: 1024px) {
+    top: 75.73px;
+    left: 358.33px;
+  }
+}
+
+.step-4 {
+  top: 235px;
+  left: 106.67px;
+
+  @media (min-width: 1024px) {
+    top: 78.74px;
+    left: 275.11px;
+  }
+}
+
+.step-5 {
+  top: 235px;
+  left: 60.83px;
+
+  @media (min-width: 1024px) {
+    top: 61.73px;
+    left: 194.71px;
+  }
+}
+
+.step-6 {
+  top: 235px;
+  left: 15px;
+
+  @media (min-width: 1024px) {
+    top: 80.00px;
+    left: 104.30px;
+  }
+}
+
+
+
+.step-wrapper:last-child .circle {
+  background: repeating-linear-gradient(45deg,
+      #ffe066,
+      #ffe066 10px,
+      #ffd700 10px,
+      #ffd700 20px);
+  border: 2px solid #ffd700;
+  box-shadow: 0px 6.75485px 0px rgba(0, 0, 0, 0.2), 0px 6.75485px 0px #e8c500;
+
+  &:active {
+    transform: translateY(4px);
+    box-shadow: none;
+  }
+}
+
+
+.character {
+  transition: all 0.9s ease-in-out;
+}
+
+
+.character.moving img {
+    /* אנימציה של קפיצה, גדילה וסיבוב */
+    animation: jump-and-grow-animation 0.9s ease-in-out;
+}
+
+@keyframes jump-and-grow-animation {
+    0% {
+        transform: translateY(0) scale(1) rotateZ(0deg);
+    }
+    80% {
+        /* קפיצה לגובה, גדילה פי 1.2 וסיבוב של 360 מעלות */
+        transform: translateY(-20px) scale(1.2) rotateZ(-360deg);
+    }
+    100% {
+        /* איפוס גובה, שמירה על גודל וסיבוב בסוף האנימציה */
+        transform: translateY(0) scale(1) rotateZ(-360deg); 
+    }
+}

@@ -9,6 +9,7 @@ import { HighlightDirective } from '../../directives/highlight.directive';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 import { Pet } from '../../models/pet.model';
 import { LoaderSvgComponent } from '../../cmps/loader-svg/loader-svg.component';
+import { PageTrackerComponent } from '../../page-tracker/page-tracker.component';
 
 @Component({
     selector: 'about',
@@ -24,6 +25,7 @@ import { LoaderSvgComponent } from '../../cmps/loader-svg/loader-svg.component';
         CurrencyPipe,
         DatePipe,
         DateDescPipe,
+        PageTrackerComponent
     ]
 })
 export class AboutComponent {

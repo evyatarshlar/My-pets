@@ -1,78 +1,79 @@
-<div *ngIf="show25PercentMessage" 
-class=" animate-fadeIn absolute w-full h-full flex items-center justify-center z-40"
- [ngClass]="{
-             'top-[-105px] left-[196px]': 4 < currentStepIndex,
-             'top-[168px] left-[-196px]': 4 >= currentStepIndex
+<!-- old modal -->
+@if (show25PercentMessage) {
+<div class=" animate-fadeIn absolute w-full h-full flex items-center justify-center z-40"
+  [ngClass]="{
+             'top-[160px] left-0 lg:top-[-105px] lg:left-[196px]': 4 < currentStepIndex,
+             'top-[-84px] left-0 lg:top-[168px] lg:left-[-196px]': 4 >= currentStepIndex
            }">
 <div class="relative flex items-center justify-center rounded-[14px] bg-green-600 p-3 z-40">
     <div
-      class="w-full rounded-[14px] bg-white pt-5 p-3 flex flex-col items-center justify-center gap-2 text-center relative">
-      <div class="absolute -top-8 right-50% w-[30px] h-[30px] rounded-full bg-green-600 animate-tada">👍
-      </div>
-      <p class="text-2xl font-bold text-red-500">משה</p>
-      <p class="text-base leading-6 text-black font-bold">
+      class="w-full pt-5 rounded-[14px] bg-white flex flex-col gap-2 justify-center items-center p-3 text-center relative">
+         <img class="animate-tada absolute bg-secondary p-2 rounded-full font-bold text-accent -top-8 bg-green-600"
+     src="../../../assets/img/claps.svg"
+        />
+                <!-- right-50% w-[30px] h-[30px] -->
+      <p class="ymi-h2-l text-accent text-2xl font-bold text-red-500">משה</p>
+      <p class="ymi-p-a text-primary text-base leading-6 text-black font-bold">
         צברת <b>{{score}}</b> נקודות מתוך <b>{{(currentPage * 4) * 50}}</b>
       </p>
-      <p class="text-xl font-semibold text-red-500">מלך שאתה</p>
+      <p class="ymi-h3-a text-accent text-xl font-semibold text-red-500">מלך שאתה</p>
     </div>
   </div>
+  <!-- <img
+    src="../../../assets/img/dreams.webp"
+  alt="בובת עידוד"
+  class="absolute right-[0] md:right-[-15%] top-[-90%] md:top-[-30%] w-[150px] md:w-[175px] h-auto"
+/>  -->
 </div>
+}
 
- *ngIf="currentStepIndex === 4 || currentStepIndex === 8"
-  <img *ngIf="currentStepIndex === 4" src="../../../assets/img/jump.gif" alt="jump"
-    class="absolute top-[190px] left-[600px]"
-   >
+@if (currentStepIndex === 4) {
+<img src="../../../assets/img/jump2.gif" alt="jump2"
+class="absolute top-[375px] left-[-77px] lg:top-[190px] lg:left-[166px] z-10"
+>
+}
 
-  <img *ngIf="currentStepIndex === 8" src="../../../assets/img/jump2.gif" alt="jump2"
-    class="absolute top-[190px] left-[-600px]"
-  >
-
-
+@if (currentStepIndex === 8) {
+<img src="../../../assets/img/jump.gif" alt="jump"
+  class="absolute top-[116px] left-[92px] lg:top-[420px] lg:left-[-120px] z-10"
+>
+}
+<!-- fireworks -->
 <canvas #canvas id="canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000;"></canvas>
 
-<div class="border-[15px] border-[#F4FAF9] w-[500px] bg-white rounded-[20px] pb-[40px]">
-  <div class="relative flex items-center justify-center rounded-tr-[8px] text-[#0C4C40] rounded-tl-[8px] bg-[#B9E757] py-2.5 px-5 text-white z-0">
+<!-- new modal -->
+<div class="border-[15px] border-[#F4FAF9] w-[360px] h-[650px] lg:w-[500px] lg:h-[800px] bg-white rounded-[20px] pb-[40px]">
+  <div class="relative flex items-center justify-center rounded-tr-[8px] text-[#0C4C40] rounded-tl-[8px] bg-[#B9E757] py-2.5 px-5 z-0">
     <div class="absolute flex items-center justify-center -top-[32px] right-50% w-[63px] h-[63px] rounded-full bg-[#B9E757] text-center text-xl z-[-1] text-[#0C4C40]">⪔
       </div>
-    <h2 class="m-0 text-[30px] font-bold text-[#0C4C40] animate-">ההתמדה שלי</h2>
+    <h2 class="m-0 text-xl lg:text-[30px] font-bold text-[#0C4C40]">ההתמדה שלי</h2>
   </div>
-
-   <!-- <div class="card relative flex items-center justify-center rounded-tr-[8px] rounded-tl-[8px] py-2.5 px-5 z-0 overflow-hidden">
-    <div #progressFill class="progress-fill absolute top-0 left-0 w-full h-full bg-[#B9E757]"></div>
-    <div class="card-content relative z-10 flex flex-col items-center">
-        </div>
-      <div class="absolute -top-[32px] w-[63px] h-[63px] rounded-full bg-[#B9E757] text-center text-xl z-[-1] text-[#0C4C40] flex items-center justify-center">⪔</div>
-      <h2 class="m-0 text-[30px] font-bold text-[#0C4C40]">ההתמדה שלי</h2>
-    </div>
-  </div> -->
-
-
-
   
-  <div class="mb-[10px] flex items-center justify-between  pt-4 px-4 text-black">
+<div class="mb-[10px] flex items-center justify-between pt-4 px-2 lg:px-4 text-black">
 
-    <div class="flex h-8 items-center text-2xl gap-1 font-bold text-green-900">
-      <img src="../../../assets/img/coin.png" alt="Coin" class="w-6 ml-2 animate-bounce" />
+    <div class="flex h-8 items-center text-lg lg:text-2xl gap-1 font-bold text-green-900">
+      <img src="../../../assets/img/coin.png" alt="Coin" class="w-4 lg:w-6 ml-2 animate-bounce" />
       <span class="numbers relative flex overflow-hidden items-center leading-none" [ymiCountUp]="score"
-        [duration]="3000"></span>
+      [duration]="3000"></span>
       <span>+</span>
     </div>
 
-    <div class="flex h-8 items-center text-2xl gap-1 font-bold text-green-900 text-2xl">
+    <div class="flex h-8 items-center text-lg lg:text-2xl gap-1 font-bold text-green-900">
       <span [ymiCountUp]="level" [duration]="100"></span>
       <span>שלב</span>
-      <span class="text-2xl mr-[5px] animate-tada">⭐</span>
+      <span class="text-lg lg:text-2xl mr-[5px] animate-tada">⭐</span>
     </div>
   </div>
 
-  <div class="relative h-[600px]">
-    <div class="character absolute z-50 w-[50px] h-[50px]  " [style.top]="characterTop" [style.left]="characterLeft"
+  <div class="relative">
+    <div class="character absolute z-50 w-[40px] h-[40px] lg:w-[50px] lg:h-[50px]"
+    [style.top]="characterTop" [style.left]="characterLeft"
       [style.transform]="shouldFlipCharacter ? 'scaleX(-1)' : ''">
       <img src="../../../assets/img/YOMI.png" alt="Character" class="h-auto w-full">
     </div>
 
-    <div *ngFor="let step of steps; let i = index"
-      class="step-wrapper absolute flex w-full items-center justify-center   step-{{ i }}" [ngClass]="{
+    @for (step of steps; track i; let i = $index) {
+    <div class="step-wrapper absolute flex w-full items-center justify-center   step-{{ i }}" [ngClass]="{
            'top-[550px] left-0': i === 0, 'top-[480px] left-[50px]': i === 1,
            'top-[410px] left-[80px]': i === 2, 'top-[340px] left-[50px]': i === 3,
            'top-[270px] left-0': i === 4, 'top-[200px] left-[-50px]': i === 5,
@@ -81,66 +82,76 @@ class=" animate-fadeIn absolute w-full h-full flex items-center justify-center z
          }">
          
       <div
-        class="circle relative flex h-[48.13px] w-[59.1px] cursor-pointer items-center justify-center rounded-[26.8px] border-none text-[28px] transition-all duration-50 active:translate-y-1 active:shadow-none"
-        [ngClass]="{
+      class="circle relative flex h-[40px] w-[49.11px] lg:h-[48.13px] lg:w-[59.1px] cursor-pointer items-center justify-center rounded-[26.8px] border-none text-xl lg:text-[28px] transition-all duration-50 active:translate-y-1 active:shadow-none"
+      [ngClass]="{
              'bg-[#B9E757] shadow-[0px_6.75px_0px_rgba(0,0,0,0.2),_0px_6.75px_0px_#5B7C3A]': i < currentStepIndex,
              'bg-[#20A57D] shadow-[0px_6.75px_0px_rgba(0,0,0,0.2),_0px_6.75px_0px_#115540]': i === currentStepIndex,
              'bg-[#F4FAF9] shadow-[0px_6.75px_0px_#BECCCA,_0px_6.75px_0px_#F4FAF9]': i > currentStepIndex
            }">
-        <span *ngIf="i < currentStepIndex" class="font-bold text-2xl text-[#679438]">✔</span>
-        <span *ngIf="step.icon && i >= currentStepIndex">{{ step.icon }}</span>
-        <div *ngIf="i > currentStepIndex" class="absolute top-0 left-0 w-full h-full z-40 cursor-pointer rounded-full"
+        @if (i < currentStepIndex) {
+        <span class="font-bold text-2xl text-[#679438]">✔</span>
+        }
+        @if (step.icon && i > currentStepIndex) {
+        <span>{{ step.icon }}</span>
+        }
+        @if (i > currentStepIndex) {
+        <div class="absolute top-0 left-0 w-full h-full z-40 cursor-pointer rounded-full"
           (click)="activeTooltipIndex = i"></div>
+        }
 
-  <img *ngIf="i === steps.length - 1" src="../../../assets/img/Yellowspark.png" class="absolute top-[-80px] left-[-90px] w-[200px] h-[200px] object-cover pointer-events-none animate-spin duration-6000 z-[0] opacity-[0.7]" alt="special" style="max-width: none;" />
+ <!-- Special effects for final step -->
+        @if (i === steps.length - 1) {
+          <img src="../../../assets/img/Yellowspark.png" 
+               class="absolute top-[-35px] left-[-25px] lg:top-[-55px] lg:left-[-50px] w-[100px] h-[100px] lg:w-[150px] lg:h-[150px] object-cover pointer-events-none animate-spin duration-6000 z-[0] opacity-[0.7]" 
+               alt="special" style="max-width: none;" />
+          <img src="../../../assets/img/gift.png" 
+               class="absolute top-[3px] lg:top-[0px] left-[7px] w-[30px] h-[30px] lg:w-[40px] lg:h-[40px] pointer-events-none animate-pulse duration-6000" 
+               alt="special" style="max-width: none;" />
+        }
       </div>
-
-      <!-- טולטיפ למעגל CURRENT כשהגיע ל-100% גלילה - הועבר מחוץ לעיגול -->
-      <ng-container *ngIf="i === currentStepIndex && i === 4">
+      
+      @if (i === currentStepIndex && i === 4) {
         <div
-          class="animate-popIn absolute -top-[127px] left-1/2 z-40 min-w-[240px] -translate-x-1/2 rounded-2xl border-2 border-[#84f482] bg-gradient-to-r from-[#B9E757] to-[#b9e757] py-[18px] px-6 text-center text-lg font-bold text-green-800 shadow-lg"
+          class="animate-popInOut absolute -top-[127px] left-1/2 z-[5] min-w-[200px] lg:min-w-[240px] rounded-2xl border-2 border-[#84f482] bg-gradient-to-r from-[#B9E757] to-[#b9e757] py-[18px] px-4 lg:px-6 text-center text-base lg:text-lg font-bold text-green-800 shadow-lg"
           (click)="$event.stopPropagation()">
           סיימת את השלבים 1-4 בהצלחה!
           <span class="absolute top-2 right-3 cursor-pointer text-lg text-gray-400 z-40"
             (click)="closeCurrentTooltip(); $event.stopPropagation()">✖</span>
         </div>
-      </ng-container>
+      }
 
-      <!-- טולטיפ למעגל CURRENT כשהגיע לצעד 8 או עבר אותו - הועבר מחוץ לעיגול -->
-      <ng-container *ngIf="i === 8 && currentStepIndex >= 8 && show25PercentMessage">
+      @if (i === 8 && currentStepIndex === 8) {
         <div
-          class="animate-popIn absolute -top-[127px] left-1/2 z-40 min-w-[240px] -translate-x-1/2 rounded-2xl border-2 border-[#84f482] bg-gradient-to-r from-[#B9E757] to-[#b9e757] py-[18px] px-6 text-center text-lg font-bold text-green-800 shadow-lg"
+          class="animate-popInOut absolute -top-[120px] left-1/2 z-[5] min-w-[200px] lg:min-w-[240px] rounded-2xl border-2 border-[#84f482] bg-gradient-to-r from-[#B9E757] to-[#b9e757] py-[18px] px-4 lg:px-6 text-center text-base lg:text-lg font-bold text-green-800 shadow-lg"
           (click)="$event.stopPropagation()">
           סיימת את כל השלבים בהצלחה! 🎉
           <span class="absolute top-2 right-3 cursor-pointer text-lg text-gray-400 z-40"
             (click)="closeCurrentTooltip(); $event.stopPropagation()">✖</span>
         </div>
-      </ng-container>
+      }
 
-      <!-- טולטיפ למעגל INACTIVE - הועבר מחוץ לעיגול -->
-      <ng-container *ngIf="i > currentStepIndex">
-        <div *ngIf="activeTooltipIndex === i"
-          class="absolute -top-[138px] left-1/2 z-50 min-w-[220px] -translate-x-1/2 rounded-xl border border-[#AFAFAF] bg-[#F7F7F7] p-4 text-center text-base text-gray-400 shadow-lg"
+      @if (i > currentStepIndex) {
+        @if (activeTooltipIndex === i) {
+        <div class="absolute -top-[138px] left-1/2 z-50 min-w-[220px] -translate-x-1/2 rounded-xl border border-[#AFAFAF] bg-[#F7F7F7] p-4 text-center text-base text-gray-400 shadow-lg"
           (click)="$event.stopPropagation()">
           השלם את כל השלבים הקודמים כדי לפתוח את זה!
           <button disabled class="mt-2.5 rounded-md border-none bg-gray-200 py-2 px-4 text-gray-400">🔒</button>
           <span class="absolute top-2 right-3 cursor-pointer text-lg text-gray-400 z-50"
             (click)="activeTooltipIndex = null; $event.stopPropagation()">✖</span>
         </div>
-      </ng-container>
+        }
+      }
 
-      <span *ngIf="step.label"
-        class="absolute left-1/2 translate-x-[30px] whitespace-nowrap rounded-lg border border-gray-300 bg-white py-1 px-3 font-bold"
+      @if (step.label) {
+      <span class="absolute left-1/2 translate-x-[30px] whitespace-nowrap rounded-lg border border-gray-300 bg-white py-1 px-3 font-bold"
          [ngClass]="{
              'border-green-500 text-green-500' : i === currentStepIndex,
            }">{{ step.label }}</span>
+      }
     </div>
+    }
   </div>
 
   <button (click)="resetLocalStorage()"
     class="absolute bottom-6 left-4 rounded bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700 opacity-0">אפס התקדמות</button>
 </div>
-  <button (click)="devTriggerFireworks()"
-    class="fixed bottom-6 right-6 z-[1100] rounded bg-yellow-400 py-2 px-4 font-bold text-black hover:bg-yellow-500 shadow-lg">
-    הפעל זיקוקים (פיתוח)
-  </button>

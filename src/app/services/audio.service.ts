@@ -20,7 +20,7 @@ export class AudioService {
 
   async playSounds(name = 'success'): Promise<HTMLAudioElement | null> {
     try {
-      const audio = new Audio(`assets/audio/${name}.wav`);
+      const audio = new Audio(`assets/audio/${name}`);
       await audio.play();
 
       return audio;

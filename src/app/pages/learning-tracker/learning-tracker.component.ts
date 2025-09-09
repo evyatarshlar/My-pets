@@ -19,26 +19,10 @@ interface LearningStep {
 })
 export class LearningTrackerComponent implements OnInit, AfterViewInit {
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
-  
-    // Reference to the progress fill element
-  @ViewChild('progressFill') progressFillRef!: ElementRef;
-    @ViewChild('bubblesContainer') bubblesContainerRef!: ElementRef; // הוספנו הפניה לקונטיינר הבועות
-
   // Fireworks manager
   private fireworkManager!: FireworkManager;
   
   constructor(private audioService: AudioService) {}
-  
-  // כפתור פיתוח להפעלת זיקוקים ידנית
-  devTriggerFireworks(): void {
-    if (!this.fireworkManager) {
-        this.initFireworkManager();
-      }
-      this.fireworkManager?.startFireworks();
-      setTimeout(() => {
-        this.fireworkManager?.stopFireworks();
-      }, 5000);
-    }
   
   steps: LearningStep[] = [
     { label: 'היום' },
@@ -49,7 +33,7 @@ export class LearningTrackerComponent implements OnInit, AfterViewInit {
     { icon: '🪙' },
     { icon: '📚' },
     { icon: '❓' },
-    { icon: '🎁' },
+    { },
   ];
   
   score = 0;
@@ -63,7 +47,6 @@ export class LearningTrackerComponent implements OnInit, AfterViewInit {
 
   // משתנים עבור מערכת דפים
   currentPage: number = 1;
-  totalStepsCompleted: number = 0; // סה"כ שלבים שהושלמו מכל הדפים
 
   // שמירה וטעינה של מצב הדמות והניקוד
   private saveStateToStorage() {
@@ -74,7 +57,6 @@ export class LearningTrackerComponent implements OnInit, AfterViewInit {
       characterTop: this.characterTop,
       characterLeft: this.characterLeft,
       currentPage: this.currentPage,
-      totalStepsCompleted: this.totalStepsCompleted
     }));
   }
 
@@ -89,7 +71,6 @@ export class LearningTrackerComponent implements OnInit, AfterViewInit {
         this.characterTop = state.characterTop ?? '0px';
         this.characterLeft = state.characterLeft ?? '0px';
         this.currentPage = state.currentPage ?? 1;
-        this.totalStepsCompleted = state.totalStepsCompleted ?? 0;
       } catch {}
     }
     
@@ -118,18 +99,6 @@ export class LearningTrackerComponent implements OnInit, AfterViewInit {
         this.fireworkManager = new FireworkManager(canvas, ctx);
       }
     }, 100);
-        this.animateHeaderFill();
-
-  }
-
-    private animateHeaderFill(): void {
-    const progressFill = this.progressFillRef?.nativeElement;
-    if (progressFill) {
-      // Small delay to ensure the element is in the DOM
-      setTimeout(() => {
-        progressFill.classList.add('fill-start');
-      }, 200);
-    }
   }
 
   @HostListener('window:scroll', [])
@@ -145,7 +114,6 @@ export class LearningTrackerComponent implements OnInit, AfterViewInit {
       
       this.score += 50 * stepsToAdvance;
       this.level += stepsToAdvance;
-      this.totalStepsCompleted += stepsToAdvance;
       this.currentStepIndex = Math.min(targetStep, this.steps.length - 1);
       // Update character position first, then trigger fireworks
       this.updateCharacterPosition(() => {
@@ -168,7 +136,6 @@ export class LearningTrackerComponent implements OnInit, AfterViewInit {
   }
 
   private updateCharacterPosition(callback?: () => void): void {
-    this.waveAnimation();
     const characterElement = document.querySelector('.character') as HTMLElement;
     if (characterElement) {
       characterElement.classList.add('moving');
@@ -180,13 +147,24 @@ export class LearningTrackerComponent implements OnInit, AfterViewInit {
       setTimeout(() => {
         const currentStepElement = document.querySelector(`.step-${this.currentStepIndex}`) as HTMLElement;
         if (currentStepElement) {
+
+
+          const isMobile = window.innerWidth < 1024;
+        
+        // מיקום הדמות בהתאם לגודל המסך
+        if (isMobile) {
+          // במובייל - מיקום הדמות יותר קרוב לעיגול
+          this.characterTop = `${currentStepElement.offsetTop - 30}px`;
+          this.characterLeft = `${currentStepElement.offsetLeft + 145}px`;
+        } else {
+          // בדסקטופ - המיקום המקורי
           this.characterTop = `${currentStepElement.offsetTop - 40}px`;
           this.characterLeft = `${currentStepElement.offsetLeft + 210}px`;
-          this.saveStateToStorage();
-          this.audioService.playSounds(this.currentStepIndex === 4 ?
-             'mixkit-achievement-bell-600'
-              : 'mixkit-fairy-cartoon-success-voice-344');
-
+        }
+        this.saveStateToStorage();
+          if (this.currentStepIndex !== 4 && this.currentStepIndex !== 8) {
+            this.audioService.playSounds('beep-3.mp3');
+          }
           // Execute callback after position update
           if (callback) {
             setTimeout(callback, 100); // Small delay to ensure position is set
@@ -196,22 +174,10 @@ export class LearningTrackerComponent implements OnInit, AfterViewInit {
     });
   }
 
-private waveAnimation(): void {   
-  // const headerElement = document.querySelector('.header-container') as HTMLElement;
-  // headerElement.addEventListener('click', function() {
-document.addEventListener('DOMContentLoaded', () => {
-  const progressFill = document.querySelector('.progress-fill') as HTMLElement;
-  
-  // הוספת השהיה קצרה לפני התחלת האנימציה (אופציונלי)
-  setTimeout(() => {
-    progressFill.classList.add('fill-start');
-  }, 200); // 200 מילישניות
-});
-}
-  private triggerFireworksIfNeeded(): void {    
+  private triggerFireworksIfNeeded(): void {
     // Fireworks should trigger on steps 4 and 8 (0-indexed: 3 and 7), and the final step
     if (this.currentStepIndex === 4 || this.currentStepIndex === 8 || this.currentStepIndex === this.steps.length - 1) {
-      this.audioService.playSounds('clapping');
+      this.audioService.playSounds('success.mp3');
       // Make sure fireworkManager is initialized
       if (!this.fireworkManager) {
         this.initFireworkManager();
@@ -246,7 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
       this.characterTop = '0px';
       this.characterLeft = '0px';
       this.currentPage = 1;
-      this.totalStepsCompleted = 0;
       this.updateCharacterPosition();
     }
 
@@ -270,11 +235,6 @@ document.addEventListener('DOMContentLoaded', () => {
       this.saveStateToStorage();
     }
 
-    getCurrentStepDisplay(): number {
-      // מחזיר את המספר הגלובלי של השלב
-      return this.totalStepsCompleted + this.currentStepIndex + 1;
-    }
-
     getPageStepsRange(): string {
       const baseStep = (this.currentPage - 1) * 4;
       return `Steps ${baseStep + 1}-${baseStep + 4}`;
@@ -284,6 +244,9 @@ document.addEventListener('DOMContentLoaded', () => {
     @HostListener('window:resize')
     onResize() {
       this.fireworkManager?.onResize();
+      setTimeout(() => {
+    this.updateCharacterPosition();
+  }, 100);
     }
 
     

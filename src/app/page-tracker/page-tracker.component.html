@@ -1,0 +1,131 @@
+<div
+    class="relative w-[360px] h-[650px] lg:w-[840px] lg:h-[325px] bg-[#F4FAF9] rounded-[20px] pt-3 pb-[40px] text-center ">
+
+    <span
+        class="absolute isax isax-brush-1 text-secondary leading-6 cursor-pointer bg-accent p-2 rounded-full  top-3 left-3 bg-[#0C4C40] text-[#B9E757]">🖌️</span>
+
+    <div class="bg-[#F4F4F4] h-2 rounded-lg  ms-auto me-4 w-[90%] flex justify-end">
+        <div class="bg-secondary  bg-[#B9E757] rounded-lg h-full text-center flex justify-center items-center"
+            [style.width.%]="(currentStepIndex / 7) * 100 | number : '1.0-0'">
+            <p class="ymi-h3-a text-accent text-[#0C4C40]"></p>
+        </div>
+    </div>
+
+    <h2 class="my-2 text-xl lg:text-[40px] font-bold text-[#0C4C40]">מסכת מכות</h2>
+    <p class="text-sm lg:text-[18px] text-[#20A57D]">יום רביעי י”ג אלול</p>
+
+    <div class="relative w-full my-2 mx-auto lg:ml-8 h-[60%]">
+
+        <svg class="absolute top-[14.5rem] lg:top-20 lg:left-[7.5rem] w-[320px] lg:w-[516px]" height="34"
+            viewBox="0 0 516 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M514 19.2923C475.5 19.2923 466 1.95978 433 1.95978C400 1.95978 369.5 19.2923 345.5 19.2923C309.5 19.2923 274.851 9.8543 253.851 9.8543C229.317 9.8543 193.5 19.2923 170.074 19.2923C146.647 19.2923 112 4.01777 90 4.01777C65.5 4.01777 34.5 13.0179 1.5 32.0179"
+                stroke="#B9E757" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                stroke-dasharray="0.08 7.57" />
+        </svg>
+
+        <div class="character absolute z-50 w-[33.6px] h-[33.6px] lg:w-[42px] lg:h-[42px]" [style.top]="characterTop"
+            [style.left]="characterLeft">
+            <img src="../../../assets/img/YOMI.png" alt="Character" class="h-auto w-full">
+        </div>
+
+        @for (step of steps; track i; let i = $index) {
+        <div class="step-wrapper absolute flex items-center justify-center step-{{ i }}" [ngClass]="{
+           'top-[550px] left-0': i === 0, 'top-[480px] left-[50px]': i === 1,
+           'top-[410px] left-[80px]': i === 2, 'top-[340px] left-[50px]': i === 3,
+           'top-[270px] left-0': i === 4, 'top-[200px] left-[-50px]': i === 5,
+           'top-[130px] left-[-80px]': i === 6
+         }">
+
+
+            <div class="circle relative flex h-[31.26px] w-[38.39px] lg:h-[37.61px] lg:w-[46.19px] cursor-pointer items-center justify-center rounded-[26.8px] border-none text-xl lg:text-[28px] transition-all duration-50 active:translate-y-1 active:shadow-none"
+                [ngClass]="{
+             'bg-[#B9E757] shadow-[0px_6.75px_0px_rgba(0,0,0,0.2),_0px_6.75px_0px_#5B7C3A]': i < currentStepIndex,
+             'bg-[#20A57D] shadow-[0px_6.75px_0px_rgba(0,0,0,0.2),_0px_6.75px_0px_#115540]': i === currentStepIndex,
+             'bg-[#F8F8F8] shadow-[0px_6.75px_0px_#BECCCA,_0px_6.75px_0px_#F4FAF9]': i > currentStepIndex
+           }">
+                @if (i < currentStepIndex) { <span class="font-bold text-2xl text-[#679438]">✔</span>
+                    }
+                    @if (step.icon && i > currentStepIndex) {
+                    <span class="text-2xl">{{ step.icon }}</span>
+                    }
+                    @if (i > currentStepIndex) {
+                    <div class="absolute top-0 left-0 w-full h-full z-40 cursor-pointer rounded-full"
+                        (click)="activeTooltipIndex = i"></div>
+                    }
+
+                    <!-- Special effects for final step -->
+                    @if (i === steps.length - 1) {
+                    <img src="../../../assets/img/Yellowspark.png"
+                        class="absolute top-[-35px] left-[-25px] lg:top-[-55px] lg:left-[-50px] w-[80px] h-[80px] lg:w-[150px] lg:h-[150px] object-cover pointer-events-none animate-spin duration-6000 z-[0] opacity-[0.7]"
+                        alt="special" style="max-width: none;" />
+                    <img src="../../../assets/img/gift.png"
+                        class="absolute top-[3px] lg:top-[0px] left-[7px] w-[30px] h-[30px] lg:w-[30px] lg:h-[30px] pointer-events-none animate-pulse duration-6000"
+                        alt="special" style="max-width: none;" />
+                    }
+            </div>
+
+            @if (i === currentStepIndex && isCharacterAnimationComplete) {
+            <div class="absolute z-50 flex flex-col items-center -top-[67px] -left-[3.5rem]">
+                <svg width="68" height="50" viewBox="0 0 68 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g filter="url(#filter0_i_99_7773)">
+                        <path
+                            d="M63.3667 35.7542C65.3618 28.8902 66.0357 18.1939 61.5364 11.8288C53.7773 0.853549 30.8997 -0.929917 17.4905 1.71873C3.55254 4.47072 -3.74441 20.7435 1.98196 32.1784C6.26241 40.7232 20.1857 44.6995 30.5799 45.1205C36.418 45.3574 42.265 44.7313 48.1099 44.6584C49.1515 44.6463 50.2224 44.6538 51.196 44.9705C52.0973 45.2652 52.8607 45.8007 53.6412 46.29C55.8265 47.6529 58.3031 48.6823 60.9022 49.3148C62.2762 49.6488 63.7086 49.8979 65.1392 49.9779C65.7544 50.0115 67.5754 49.7335 67.985 49.9857C65.5133 48.4773 63.6913 46.188 62.9392 43.6379C62.1324 40.9084 62.6158 38.318 63.3572 35.7546L63.3667 35.7542Z"
+                            fill="#0C4C40" />
+                    </g>
+                    <text x="50%" y="45%" text-anchor="middle" fill="#B9E757" font-size="11" font-weight="bold"
+                        dominant-baseline="middle">
+                        אתה מלך!!
+                    </text>
+                    <text x="50%" y="65%" text-anchor="middle" fill="white" font-size="8" dominant-baseline="middle">
+                        מחכה לך מחר
+                    </text>
+                    <defs>
+                        <filter id="filter0_i_99_7773" x="0.0195312" y="0.635223" width="68.7217" height="49.6746"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feColorMatrix in="SourceAlpha" type="matrix"
+                                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                            <feOffset dx="0.756219" dy="0.324094" />
+                            <feGaussianBlur stdDeviation="2.43611" />
+                            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+                            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
+                            <feBlend mode="normal" in2="shape" result="effect1_innerShadow_99_7773" />
+                        </filter>
+                    </defs>
+                </svg>
+            </div>
+            }
+
+            @if (i > currentStepIndex) {
+            @if (activeTooltipIndex === i) {
+            <div class="absolute -top-[138px] left-1/2 z-50 min-w-[220px] -translate-x-1/2 rounded-xl border border-[#AFAFAF] bg-[#F7F7F7] p-4 text-center text-base text-gray-400 shadow-lg"
+                (click)="$event.stopPropagation()">
+                השלם את כל השלבים הקודמים כדי לפתוח את זה!
+                <button disabled class="mt-2.5 rounded-md border-none bg-gray-200 py-2 px-4 text-gray-400">🔒</button>
+                <span class="absolute top-2 right-3 cursor-pointer text-lg text-gray-400 z-50"
+                    (click)="activeTooltipIndex = null; $event.stopPropagation()">✖</span>
+            </div>
+            }
+            }
+
+
+            <span
+                class="absolute left-1/2 -translate-x-1/2 bottom-[-33px] whitespace-nowrap rounded-lg border border-[#B9E757] text-[13px] bg-white py-[1px] px-1.5 font-bold shadow-[0_0_3.87243px_rgba(0,0,0,0.16)]"
+                [ngClass]="{
+             'text-[18px] bottom-[-41px]' : i === currentStepIndex,
+           }">{{ step.label }}
+           @if (i === currentStepIndex) {
+           <span class="absolute left-1/3 -translate-x-1/2 bottom-[-33px] ">👆</span>
+           }
+           </span>
+        </div>
+        }
+    </div>
+
+    <button class="rounded-lg bg-[#0C4C40] w-[90%] text-[#B9E757] py-2 font-bold">הכנס לגמרא</button>
+    <button (click)="resetLocalStorage()"
+        class="absolute -bottom-20 -left-4 rounded bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700 opacity-1">אפס
+        התקדמות</button>
+</div>
